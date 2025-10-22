@@ -9,7 +9,7 @@ import { LoadingState } from '@/components/ui/loading-state';
 import { ErrorState } from '@/components/ui/error-state';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useMe, useLogin, useLogout } from '@/lib/query/auth';
-import { useLogos, useCreateLogo, useDeleteLogo } from '@/lib/query/logos';
+// import { useLogos, useCreateLogo, useDeleteLogo } from '@/lib/query/logos';
 import { useUsers } from '@/lib/query/users';
 import { RefreshCw, Plus, Trash2 } from 'lucide-react';
 
@@ -25,12 +25,12 @@ export default function ApiDemoPage() {
   const logoutMutation = useLogout();
 
   // Data queries
-  const { data: logos, isLoading: logosLoading, error: logosError, refetch: refetchLogos } = useLogos();
+  // const { data: logos, isLoading: logosLoading, error: logosError, refetch: refetchLogos } = useLogos();
   const { data: users, isLoading: usersLoading, error: usersError, refetch: refetchUsers } = useUsers();
 
   // Mutations
-  const createLogoMutation = useCreateLogo();
-  const deleteLogoMutation = useDeleteLogo();
+  // const createLogoMutation = useCreateLogo();
+  // const deleteLogoMutation = useDeleteLogo();
 
   const handleLogin = async () => {
     try {
@@ -51,29 +51,29 @@ export default function ApiDemoPage() {
     }
   };
 
-  const handleCreateLogo = async () => {
-    if (!newLogoName || !newLogoUrl) return;
-    
-    try {
-      await createLogoMutation.mutateAsync({
-        name: newLogoName,
-        url: newLogoUrl,
-        tags: ['demo'],
-      });
-      setNewLogoName('');
-      setNewLogoUrl('');
-    } catch (error) {
-      console.error('Create logo failed:', error);
-    }
-  };
+  // const handleCreateLogo = async () => {
+  //   if (!newLogoName || !newLogoUrl) return;
+  //   
+  //   try {
+  //     await createLogoMutation.mutateAsync({
+  //       name: newLogoName,
+  //       url: newLogoUrl,
+  //       tags: ['demo'],
+  //     });
+  //     setNewLogoName('');
+  //     setNewLogoUrl('');
+  //   } catch (error) {
+  //     console.error('Create logo failed:', error);
+  //   }
+  // };
 
-  const handleDeleteLogo = async (id: string) => {
-    try {
-      await deleteLogoMutation.mutateAsync(id);
-    } catch (error) {
-      console.error('Delete logo failed:', error);
-    }
-  };
+  // const handleDeleteLogo = async (id: string) => {
+  //   try {
+  //     await deleteLogoMutation.mutateAsync(id);
+  //   } catch (error) {
+  //     console.error('Delete logo failed:', error);
+  //   }
+  // };
 
   return (
     <div className="container mx-auto py-8 space-y-8">
@@ -173,86 +173,7 @@ export default function ApiDemoPage() {
         </CardContent>
       </Card>
 
-      {/* Logos Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Logos</CardTitle>
-          <CardDescription>
-            CRUD operations with logos
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Create Logo Form */}
-          <div className="flex gap-4">
-            <Input
-              placeholder="Logo name"
-              value={newLogoName}
-              onChange={(e) => setNewLogoName(e.target.value)}
-              className="flex-1"
-            />
-            <Input
-              placeholder="Logo URL"
-              value={newLogoUrl}
-              onChange={(e) => setNewLogoUrl(e.target.value)}
-              className="flex-1"
-            />
-            <Button 
-              onClick={handleCreateLogo}
-              disabled={createLogoMutation.isPending || !newLogoName || !newLogoUrl}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Logo
-            </Button>
-          </div>
-
-          {/* Logos List */}
-          {logosLoading ? (
-            <LoadingState message="Loading logos..." />
-          ) : logosError ? (
-            <ErrorState 
-              message="Failed to load logos" 
-              onRetry={() => refetchLogos()} 
-            />
-          ) : logos?.data?.length ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {logos.data.map((logo) => (
-                <Card key={logo.id}>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold">{logo.name}</h3>
-                        <p className="text-sm text-muted-foreground">{logo.url}</p>
-                        {logo.tags?.map((tag) => (
-                          <Badge key={tag} variant="outline" className="mr-1 mt-1">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDeleteLogo(logo.id)}
-                        disabled={deleteLogoMutation.isPending}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <EmptyState 
-              message="No logos found" 
-              actionLabel="Add your first logo"
-              onAction={() => {
-                setNewLogoName('Sample Logo');
-                setNewLogoUrl('https://example.com/logo.png');
-              }}
-            />
-          )}
-        </CardContent>
-      </Card>
+      {/* Logos Section - Commented out for School Bus Tracking System */}
 
       {/* API Status */}
       <Card>

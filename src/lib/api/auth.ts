@@ -1,33 +1,52 @@
-import { api } from '../http';
+import axios from 'axios';
 import type { LoginCredentials, LoginResponse, RegisterData, User } from '@/types/api';
+import { API_BASE_URL } from './config';
+
+// Create axios instance for remote API
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add request interceptor to include auth token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export const authApi = {
   // Login user
   login: async (credentials: LoginCredentials): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>('/auth/login', credentials);
+    const response = await api.post<LoginResponse>('/users/login', credentials);
     return response.data;
   },
 
   // Register user
   register: async (data: RegisterData): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>('/auth/register', data);
+    const response = await api.post<LoginResponse>('/users/register', data);
     return response.data;
   },
 
-  // Get current user
-  getMe: async (): Promise<User> => {
-    const response = await api.get<User>('/auth/me');
+  // Get current user profile
+  getProfile: async (): Promise<User> => {
+    const response = await api.get<User>('/profile');
     return response.data;
   },
 
-  // Logout user
+  // Update profile
+  updateProfile: async (data: Partial<User>): Promise<User> => {
+    const response = await api.put<User>('/profile', data);
+    return response.data;
+  },
+
+  // Logout user (clear token)
   logout: async (): Promise<void> => {
-    await api.post('/auth/logout');
-  },
-
-  // Refresh token
-  refreshToken: async (refreshToken: string): Promise<{ token: string }> => {
-    const response = await api.post<{ token: string }>('/auth/refresh', { refreshToken });
-    return response.data;
+    localStorage.removeItem('authToken');
   },
 };

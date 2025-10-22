@@ -1,69 +1,74 @@
-# Next.js Starter Template
+# 🚌 School Bus Tracking System - Frontend
 
-A comprehensive Next.js starter template with all the essentials for rapid development. This template includes everything you need to start building modern web applications without the setup overhead.
+A modern, responsive frontend application for the School Bus Tracking System, built with Next.js 16, TypeScript, and Tailwind CSS. This application connects to the remote backend API at [https://web-project-sigma-two.vercel.app/](https://web-project-sigma-two.vercel.app/).
 
-## 🚀 Features
+## ✨ Features
 
-- **Next.js 14** with App Router
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling
-- **React Hook Form** with **Zod** validation
-- **Headless UI** for accessible components
-- **Lucide React** for icons
-- **Framer Motion** for animations
-- **ESLint** and **Prettier** for code quality
-- **Responsive design** system
-- **Dark mode** support
-- **Form validation** with error handling
-- **Reusable UI components**
-- **Utility functions** and helpers
-- **Complete API layer** with React Query
-- **Authentication** with token management
-- **API proxy** for CORS handling
-- **Loading/Error/Empty states**
-- **Type-safe API calls**
+### 🔐 Authentication System
+- **User Registration**: Create accounts for Admin, Driver, and Parent roles
+- **User Login**: Secure JWT-based authentication
+- **Role-based Access Control**: Different dashboards and permissions based on user role
+- **Profile Management**: Update personal information and account settings
 
-## 📦 What's Included
+### 👨‍💼 Admin Dashboard
+- **System Overview**: Total drivers, students, buses, and attendance statistics
+- **User Management**: View, edit, and delete user accounts
+- **Student Management**: Manage student records and information
+- **Route Management**: Create and manage bus routes
+- **Bus Management**: Monitor and control bus fleet
+
+### 🚌 Driver Dashboard
+- **Route Overview**: View assigned routes and schedules
+- **Bus Management**: Update bus status and location
+- **Attendance Tracking**: Record student attendance
+- **Notifications**: Receive important updates and alerts
+
+### 👨‍👩‍👧‍👦 Parent Dashboard
+- **Child Tracking**: Monitor children's bus status and location
+- **Attendance History**: View attendance records and history
+- **Notifications**: Receive updates about children's transportation
+- **Emergency Contacts**: Manage emergency contact information
+
+### 📱 Responsive Design
+- **Mobile-first**: Optimized for all device sizes
+- **Modern UI**: Clean, intuitive interface with Tailwind CSS
+- **Accessibility**: WCAG compliant design patterns
+- **Real-time Updates**: Live data synchronization with backend
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **Next.js 16**: React framework with App Router
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Hook Form**: Form handling and validation
+- **Zod**: Schema validation
+- **Axios**: HTTP client for API communication
 
 ### UI Components
-- Button (with variants)
-- Input
-- Card
-- Modal
-- Badge
-- Alert
-- Spinner
-- Form components with validation
+- **Headless UI**: Accessible UI components
+- **Lucide React**: Beautiful icons
+- **Framer Motion**: Smooth animations
+- **Class Variance Authority**: Component variants
 
-### Layout Components
-- Header with navigation
-- Footer
-- Responsive layout
+### Development Tools
+- **ESLint**: Code linting
+- **Prettier**: Code formatting
+- **TypeScript**: Static type checking
+- **Tailwind Merge**: Utility class merging
 
-### Pages
-- Home page with hero section
-- About page with features
-- Contact page with form
-
-### Utilities
-- Date formatting
-- Currency formatting
-- Text utilities (slugify, truncate)
-- Validation helpers
-- Debounce and throttle functions
-
-## 🛠️ Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+ 
-- npm or yarn
+- npm or yarn package manager
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd starter-nextjs
+   git clone <repository-url>
+   cd school-bus-tracking-frontend
    ```
 
 2. **Install dependencies**
@@ -71,307 +76,195 @@ A comprehensive Next.js starter template with all the essentials for rapid devel
    npm install
    ```
 
-3. **Configure environment**
-   ```bash
-   cp env.example .env.local
-   ```
-   Edit `.env.local` to set your API base URL:
-   ```env
-   NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Run TypeScript type checking
 
 ## 📁 Project Structure
 
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── about/             # About page
-│   ├── contact/           # Contact page
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # Reusable components
-│   ├── forms/             # Form components
-│   ├── layout/            # Layout components
-│   └── ui/                # UI components
-└── lib/                   # Utility functions
-    └── utils.ts           # Common utilities
+│   ├── login/             # Authentication pages
+│   ├── register/
+│   ├── admin/             # Admin-specific pages
+│   │   └── dashboard/
+│   ├── driver/            # Driver-specific pages
+│   │   └── dashboard/
+│   ├── parent/            # Parent-specific pages
+│   │   └── dashboard/
+│   ├── profile/           # Profile management
+│   └── unauthorized/      # Access denied page
+├── components/            # Reusable React components
+│   └── AuthLayout.tsx     # Authentication layout wrapper
+├── lib/                   # Utility libraries
+│   ├── api/              # API client modules
+│   │   ├── auth.ts       # Authentication API
+│   │   ├── remote.ts     # Remote API endpoints
+│   │   └── index.ts      # API exports
+│   └── http.ts            # HTTP client configuration
+├── types/                 # TypeScript type definitions
+│   └── api.ts            # API-related types
+└── styles/               # Global styles
 ```
-
-## 🎨 Customization
-
-### Colors
-The template uses CSS custom properties for theming. You can customize colors in `src/app/globals.css`:
-
-```css
-:root {
-  --primary: 221.2 83.2% 53.3%;
-  --secondary: 210 40% 96%;
-  /* ... other colors */
-}
-```
-
-### Components
-All UI components are located in `src/components/ui/` and can be easily customized or extended.
-
-### Styling
-The project uses Tailwind CSS with custom design tokens. You can modify the configuration in `tailwind.config.ts`.
-
-## 📝 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint errors
-- `npm run format` - Format code with Prettier
-- `npm run format:check` - Check code formatting
-- `npm run type-check` - Run TypeScript type checking
-
-## 🧩 Adding New Components
-
-1. Create your component in `src/components/ui/`
-2. Follow the existing patterns for props and styling
-3. Export from the component file
-4. Import and use in your pages
-
-Example:
-```tsx
-// src/components/ui/my-component.tsx
-import { cn } from "@/lib/utils";
-
-interface MyComponentProps {
-  className?: string;
-  children: React.ReactNode;
-}
-
-export function MyComponent({ className, children }: MyComponentProps) {
-  return (
-    <div className={cn("base-styles", className)}>
-      {children}
-    </div>
-  );
-}
-```
-
-## 📱 Responsive Design
-
-The template is fully responsive and includes:
-- Mobile-first approach
-- Responsive navigation
-- Flexible grid layouts
-- Responsive typography
-- Touch-friendly interactions
-
-## 🌙 Dark Mode
-
-Dark mode is supported through CSS custom properties and can be toggled by adding the `dark` class to the HTML element.
-
-## 🔧 Configuration
-
-### ESLint
-ESLint is configured with Next.js recommended rules. You can modify the configuration in `eslint.config.mjs`.
-
-### Prettier
-Prettier is configured for consistent code formatting. Configuration is in `.prettierrc`.
-
-### TypeScript
-TypeScript is configured with strict mode enabled. Configuration is in `tsconfig.json`.
 
 ## 🔌 API Integration
 
-This starter includes a complete API layer for consuming backend services.
+The frontend connects to the remote School Bus Tracking System API:
 
-### Environment Configuration
+**Base URL**: `https://web-project-sigma-two.vercel.app/api`
 
-Create a `.env.local` file with your API configuration:
+### Available Endpoints
+
+#### Authentication
+- `POST /login` - User login
+- `POST /register` - User registration
+- `GET /profile` - Get user profile
+- `PUT /profile` - Update user profile
+
+#### User Management (Admin)
+- `GET /users` - Get all users
+- `PUT /users/:id` - Update user
+- `DELETE /users/:id` - Delete user
+
+#### Student Management
+- `GET /students` - Get all students
+- `POST /students` - Create student
+- `PUT /students/:id` - Update student
+- `DELETE /students/:id` - Delete student
+
+#### Route Management
+- `GET /routes` - Get all routes
+- `POST /routes` - Create route
+- `PUT /routes/:id` - Update route
+
+#### Bus Management
+- `GET /buses` - Get all buses
+- `POST /buses` - Create bus
+- `PATCH /buses/:id/status` - Update bus status
+
+#### Attendance Tracking
+- `POST /attendance` - Record attendance
+- `GET /attendance/student/:id` - Get student attendance
+- `GET /attendance/route/:id` - Get route attendance
+
+#### Notifications
+- `GET /notifications` - Get notifications
+- `POST /notifications` - Send notification
+- `PATCH /notifications/:id/read` - Mark as read
+
+#### Dashboard Data
+- `GET /dashboard/admin` - Admin dashboard data
+- `GET /dashboard/driver` - Driver dashboard data
+- `GET /dashboard/parent` - Parent dashboard data
+
+## 🔒 Authentication Flow
+
+1. **Login/Register**: Users authenticate with email and password
+2. **JWT Token**: Backend returns JWT token for session management
+3. **Token Storage**: Token stored in localStorage for persistence
+4. **Role-based Routing**: Users redirected to appropriate dashboard
+5. **Protected Routes**: AuthLayout component handles authentication checks
+6. **Auto-logout**: Token expiration handled gracefully
+
+## 🎨 UI/UX Features
+
+### Design System
+- **Color Palette**: Professional blue and gray theme
+- **Typography**: Clean, readable font hierarchy
+- **Spacing**: Consistent spacing using Tailwind utilities
+- **Components**: Reusable, accessible components
+
+### Responsive Design
+- **Mobile**: Optimized for smartphones
+- **Tablet**: Adapted layout for medium screens
+- **Desktop**: Full-featured desktop experience
+
+### Accessibility
+- **Keyboard Navigation**: Full keyboard support
+- **Screen Readers**: ARIA labels and semantic HTML
+- **Color Contrast**: WCAG AA compliant
+- **Focus Management**: Clear focus indicators
+
+## 🔧 Configuration
+
+### Environment Variables
+Create a `.env.local` file for local development:
 
 ```env
-# Required: Your backend API base URL
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
+# API Configuration
+NEXT_PUBLIC_API_URL=https://web-project-sigma-two.vercel.app/api
 
-# Optional: Enable API proxy for CORS handling
-NEXT_PUBLIC_USE_PROXY=false
-
-# Optional: API timeout in milliseconds
-NEXT_PUBLIC_API_TIMEOUT=10000
+# Optional: Analytics
+NEXT_PUBLIC_GA_ID=your-google-analytics-id
 ```
 
-### API Structure
+### Tailwind Configuration
+The project uses a custom Tailwind configuration with:
+- Extended color palette
+- Custom spacing scale
+- Component-specific utilities
+- Responsive breakpoints
 
-```
-src/
-├── lib/
-│   ├── api/           # API functions
-│   │   ├── auth.ts    # Authentication endpoints
-│   │   ├── users.ts   # User management
-│   │   ├── logos.ts   # Logo CRUD operations
-│   │   └── index.ts   # Export all APIs
-│   ├── query/         # React Query hooks
-│   │   ├── client.ts  # Query client setup
-│   │   ├── auth.ts    # Auth hooks
-│   │   ├── users.ts   # User hooks
-│   │   └── logos.ts   # Logo hooks
-│   └── http.ts        # HTTP client with interceptors
-├── types/
-│   └── api.ts         # API type definitions
-└── app/
-    └── api-demo/      # Example API usage
-```
+## 🚀 Deployment
 
-### Adding a New Endpoint (60 seconds)
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables
+3. Deploy automatically on push
 
-1. **Add types** in `src/types/api.ts`:
-   ```typescript
-   export interface Product {
-     id: string;
-     name: string;
-     price: number;
-   }
-   ```
+### Other Platforms
+- **Netlify**: Static site deployment
+- **Railway**: Full-stack deployment
+- **Docker**: Containerized deployment
 
-2. **Create API function** in `src/lib/api/products.ts`:
-   ```typescript
-   import { api } from '../http';
-   import type { Product } from '@/types/api';
+## 📱 Browser Support
 
-   export const productsApi = {
-     getAll: async (): Promise<Product[]> => {
-       const response = await api.get<Product[]>('/products');
-       return response.data;
-     },
-   };
-   ```
-
-3. **Create React Query hook** in `src/lib/query/products.ts`:
-   ```typescript
-   import { useQuery } from '@tanstack/react-query';
-   import { productsApi } from '@/lib/api';
-
-   export function useProducts() {
-     return useQuery({
-       queryKey: ['products'],
-       queryFn: productsApi.getAll,
-     });
-   }
-   ```
-
-4. **Use in component**:
-   ```typescript
-   import { useProducts } from '@/lib/query/products';
-
-   export function ProductsList() {
-     const { data: products, isLoading, error } = useProducts();
-     
-     if (isLoading) return <LoadingState />;
-     if (error) return <ErrorState />;
-     
-     return (
-       <div>
-         {products?.map(product => (
-           <div key={product.id}>{product.name}</div>
-         ))}
-       </div>
-     );
-   }
-   ```
-
-### Using React Query Hooks
-
-```typescript
-// Queries (GET requests)
-const { data, isLoading, error, refetch } = useUsers();
-const { data: user } = useUser(userId);
-
-// Mutations (POST/PUT/DELETE requests)
-const createUser = useCreateUser();
-const updateUser = useUpdateUser();
-const deleteUser = useDeleteUser();
-
-// Usage
-const handleCreate = async () => {
-  await createUser.mutateAsync({ name: 'John', email: 'john@example.com' });
-};
-```
-
-### API Proxy for CORS
-
-Enable the API proxy in `.env.local`:
-```env
-NEXT_PUBLIC_USE_PROXY=true
-```
-
-This routes all API calls through `/api/proxy/*` to avoid CORS issues during development.
-
-### Authentication
-
-The HTTP client automatically handles authentication tokens:
-
-```typescript
-// Login and store token
-const { mutate: login } = useLogin();
-login({ email: 'user@example.com', password: 'password' });
-
-// Token is automatically added to requests
-const { data: user } = useMe(); // Uses stored token
-```
-
-### Error Handling
-
-All API calls include proper error handling:
-
-```typescript
-const { data, error, isLoading } = useUsers();
-
-if (error) {
-  // Error is typed as ApiError
-  console.log(error.message, error.status, error.code);
-}
-```
-
-### Demo Page
-
-Visit `/api-demo` to see the API layer in action with:
-- Authentication flow
-- CRUD operations
-- Loading/error states
-- Real-time updates
-
-## 📚 Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [React Hook Form Documentation](https://react-hook-form.com/)
-- [Zod Documentation](https://zod.dev/)
-- [React Query Documentation](https://tanstack.com/query/latest)
+- **Chrome**: Latest 2 versions
+- **Firefox**: Latest 2 versions
+- **Safari**: Latest 2 versions
+- **Edge**: Latest 2 versions
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- [Next.js](https://nextjs.org/) for the amazing framework
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Headless UI](https://headlessui.com/) for accessible components
-- [Lucide](https://lucide.dev/) for the beautiful icons
+For support and questions:
+- Create an issue in the repository
+- Contact the development team
+- Check the API documentation
+
+## 🔄 Version History
+
+- **v1.0.0**: Initial release with full functionality
+- **v1.1.0**: Added real-time notifications
+- **v1.2.0**: Enhanced mobile responsiveness
+- **v1.3.0**: Improved accessibility features
 
 ---
 
-**Happy coding! 🚀**
+**Built with ❤️ for better school transportation management**
