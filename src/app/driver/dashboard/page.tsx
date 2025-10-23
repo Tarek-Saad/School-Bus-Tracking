@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { dashboardApi, routesApi, busesApi, attendanceApi, notificationsApi } from '@/lib/api';
-import { DashboardData, Route, Bus, Attendance, Notification } from '@/types/api';
+import type { DriverDashboard, Route, Bus, Attendance, Notification } from '@/types/api';
 import AuthLayout from '@/components/AuthLayout';
 
 export default function DriverDashboard() {
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [dashboardData, setDashboardData] = useState<DriverDashboard | null>(null);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [buses, setBuses] = useState<Bus[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -39,7 +39,7 @@ export default function DriverDashboard() {
 
   const handleBusStatusUpdate = async (busId: string, status: Bus['status']) => {
     try {
-      await busesApi.updateBusStatus(busId, status);
+      await busesApi.updateBusStatus(busId, { status });
       // Refresh buses data
       const updatedBuses = await busesApi.getBuses();
       setBuses(updatedBuses);
@@ -124,7 +124,7 @@ export default function DriverDashboard() {
                           Today's Students
                         </dt>
                         <dd className="text-lg font-medium text-gray-900">
-                          {dashboardData.todayStudents?.length || 0}
+                          {dashboardData.todaysStudents?.length || 0}
                         </dd>
                       </dl>
                     </div>

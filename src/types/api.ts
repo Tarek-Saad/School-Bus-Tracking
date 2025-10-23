@@ -206,6 +206,7 @@ export interface AdminDashboard {
     present: number;
     absent: number;
     late: number;
+    total: number;
   };
   recentNotifications: Notification[];
 }
@@ -247,6 +248,25 @@ export interface PaginatedResponse<T> {
     total: number;
     totalPages: number;
   };
+}
+
+// API Response Types
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+export interface PaginatedApiResponse<T = any> {
+  success: boolean;
+  data: T[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  message?: string;
 }
 
 // Error types

@@ -7,7 +7,7 @@ import type { User, PaginationParams } from '@/types/api';
 export function useUsers(params?: PaginationParams) {
   return useQuery({
     queryKey: [...queryKeys.users.all, params],
-    queryFn: () => usersApi.getAll(params),
+    queryFn: () => usersApi.getUsers(),
   });
 }
 
@@ -15,7 +15,7 @@ export function useUsers(params?: PaginationParams) {
 export function useUser(id: string) {
   return useQuery({
     queryKey: queryKeys.users.detail(id),
-    queryFn: () => usersApi.getById(id),
+    queryFn: () => usersApi.getUserById(id),
     enabled: !!id,
   });
 }
@@ -26,7 +26,7 @@ export function useUpdateUser() {
   
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<User> }) =>
-      usersApi.update(id, data),
+      usersApi.updateUser(id, data),
     onSuccess: (data, variables) => {
       // Update the user in cache
       queryClient.setQueryData(queryKeys.users.detail(variables.id), data);
@@ -41,7 +41,7 @@ export function useDeleteUser() {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: usersApi.delete,
+    mutationFn: (id: string) => usersApi.deleteUser(id),
     onSuccess: (_, id) => {
       // Remove user from cache
       queryClient.removeQueries({ queryKey: queryKeys.users.detail(id) });

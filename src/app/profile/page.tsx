@@ -153,7 +153,7 @@ export default function ProfilePage() {
                       user?.role === 'driver' ? 'bg-blue-100 text-blue-800' :
                       'bg-green-100 text-green-800'
                     }`}>
-                      {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
+                      {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'N/A'}
                     </span>
                   </div>
                   <div className="ml-3">
@@ -209,7 +209,7 @@ export default function ProfilePage() {
               <div>
                 <dt className="text-sm font-medium text-gray-500">Role</dt>
                 <dd className="mt-1 text-sm text-gray-900">
-                  {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || 'N/A'}
+                  {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'N/A'}
                 </dd>
               </div>
             </dl>

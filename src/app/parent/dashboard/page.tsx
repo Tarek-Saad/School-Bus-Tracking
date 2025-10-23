@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { dashboardApi, studentsApi, notificationsApi, attendanceApi } from '@/lib/api';
-import { DashboardData, Student, Notification, Attendance } from '@/types/api';
+import type { ParentDashboard, Student, Notification, Attendance } from '@/types/api';
 import AuthLayout from '@/components/AuthLayout';
 
 export default function ParentDashboard() {
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [dashboardData, setDashboardData] = useState<ParentDashboard | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [attendanceHistory, setAttendanceHistory] = useState<Attendance[]>([]);
@@ -28,7 +28,7 @@ export default function ParentDashboard() {
 
         // Fetch attendance history for each student
         if (studentsData.length > 0) {
-          const attendancePromises = studentsData.map(student => 
+          const attendancePromises = studentsData.map((student: Student) => 
             attendanceApi.getStudentAttendance(student.id)
           );
           const attendanceData = await Promise.all(attendancePromises);

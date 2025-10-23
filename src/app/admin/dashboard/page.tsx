@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { dashboardApi, usersApi, studentsApi, routesApi, busesApi } from '@/lib/api';
-import { DashboardData, User, Student, Route, Bus } from '@/types/api';
+import type { AdminDashboard, User, Student, Route, Bus } from '@/types/api';
 import AuthLayout from '@/components/AuthLayout';
 
 export default function AdminDashboard() {
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [dashboardData, setDashboardData] = useState<AdminDashboard | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);

@@ -5,9 +5,9 @@ import type { LoginCredentials, RegisterData, User } from '@/types/api';
 
 // Get current user
 export function useMe() {
-  return useQuery({
+  return useQuery<User>({
     queryKey: queryKeys.auth.me,
-    queryFn: authApi.getMe,
+    queryFn: authApi.getProfile,
     retry: false, // Don't retry on 401
   });
 }
@@ -20,7 +20,7 @@ export function useLogin() {
     mutationFn: authApi.login,
     onSuccess: (data) => {
       // Store token
-      localStorage.setItem('auth_token', data.token);
+      localStorage.setItem('authToken', data.token);
       // Invalidate and refetch user data
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.me });
     },
@@ -35,7 +35,7 @@ export function useRegister() {
     mutationFn: authApi.register,
     onSuccess: (data) => {
       // Store token
-      localStorage.setItem('auth_token', data.token);
+      localStorage.setItem('authToken', data.token);
       // Invalidate and refetch user data
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.me });
     },
@@ -50,7 +50,7 @@ export function useLogout() {
     mutationFn: authApi.logout,
     onSuccess: () => {
       // Clear token
-      localStorage.removeItem('auth_token');
+      localStorage.removeItem('authToken');
       // Clear all queries
       queryClient.clear();
     },

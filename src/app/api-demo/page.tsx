@@ -11,7 +11,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { useMe, useLogin, useLogout } from '@/lib/query/auth';
 // import { useLogos, useCreateLogo, useDeleteLogo } from '@/lib/query/logos';
 import { useUsers } from '@/lib/query/users';
-import { RefreshCw, Plus, Trash2 } from 'lucide-react';
+import type { User } from '@/types/api';
 
 export default function ApiDemoPage() {
   const [loginEmail, setLoginEmail] = useState('demo@example.com');
@@ -153,9 +153,9 @@ export default function ApiDemoPage() {
               message="Failed to load users" 
               onRetry={() => refetchUsers()} 
             />
-          ) : users?.data?.length ? (
+          ) : users?.length ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {users.data.map((user) => (
+              {users.map((user: User) => (
                 <Card key={user.id}>
                   <CardContent className="p-4">
                     <h3 className="font-semibold">{user.name}</h3>
