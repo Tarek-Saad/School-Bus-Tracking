@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import { dashboardApi, usersApi, studentsApi, routesApi, busesApi } from '@/lib/api';
 import type { AdminDashboard, User, Student, Route, Bus } from '@/types/api';
 import AuthLayout from '@/components/AuthLayout';
+import { EditUserModal } from '@/components/forms/edit-user-modal';
+import { EditStudentModal } from '@/components/forms/edit-student-modal';
+import { EditRouteModal } from '@/components/forms/edit-route-modal';
+import { EditBusModal } from '@/components/forms/edit-bus-modal';
 
 export default function AdminDashboard() {
   const [dashboardData, setDashboardData] = useState<AdminDashboard | null>(null);
@@ -13,6 +17,12 @@ export default function AdminDashboard() {
   const [buses, setBuses] = useState<Bus[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  
+  // Edit modal states
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
+  const [editingRoute, setEditingRoute] = useState<Route | null>(null);
+  const [editingBus, setEditingBus] = useState<Bus | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +49,26 @@ export default function AdminDashboard() {
 
     fetchData();
   }, []);
+
+  const refreshData = async () => {
+    try {
+      const [dashboard, usersData, studentsData, routesData, busesData] = await Promise.all([
+        dashboardApi.getAdminDashboard(),
+        usersApi.getUsers(),
+        studentsApi.getStudents(),
+        routesApi.getRoutes(),
+        busesApi.getBuses(),
+      ]);
+
+      setDashboardData(dashboard);
+      setUsers(usersData);
+      setStudents(studentsData);
+      setRoutes(routesData);
+      setBuses(busesData);
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -203,7 +233,10 @@ export default function AdminDashboard() {
                         }`}>
                           {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                         </span>
-                        <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                        <button 
+                          onClick={() => setEditingUser(user)}
+                          className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                        >
                           Edit
                         </button>
                       </div>
@@ -243,7 +276,10 @@ export default function AdminDashboard() {
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                           {student.grade}
                         </span>
-                        <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                        <button 
+                          onClick={() => setEditingStudent(student)}
+                          className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                        >
                           Edit
                         </button>
                       </div>
@@ -285,7 +321,10 @@ export default function AdminDashboard() {
                         }`}>
                           {route.isActive ? 'Active' : 'Inactive'}
                         </span>
-                        <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                        <button 
+                          onClick={() => setEditingRoute(route)}
+                          className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                        >
                           Edit
                         </button>
                       </div>
@@ -328,7 +367,10 @@ export default function AdminDashboard() {
                         }`}>
                           {bus.status.replace('_', ' ').toUpperCase()}
                         </span>
-                        <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                        <button 
+                          onClick={() => setEditingBus(bus)}
+                          className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                        >
                           Edit
                         </button>
                       </div>
@@ -340,6 +382,35 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+
+      {/* Edit Modals */}
+      <EditUserModal
+        user={editingUser}
+        isOpen={!!editingUser}
+        onClose={() => setEditingUser(null)}
+        onSuccess={refreshData}
+      />
+      
+      <EditStudentModal
+        student={editingStudent}
+        isOpen={!!editingStudent}
+        onClose={() => setEditingStudent(null)}
+        onSuccess={refreshData}
+      />
+      
+      <EditRouteModal
+        route={editingRoute}
+        isOpen={!!editingRoute}
+        onClose={() => setEditingRoute(null)}
+        onSuccess={refreshData}
+      />
+      
+      <EditBusModal
+        bus={editingBus}
+        isOpen={!!editingBus}
+        onClose={() => setEditingBus(null)}
+        onSuccess={refreshData}
+      />
     </AuthLayout>
   );
 }
